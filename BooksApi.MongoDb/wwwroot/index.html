@@ -5,14 +5,16 @@
     <title></title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.8.3/angular.js" integrity="sha512-klc+qN5PPscoGxSzFpetVsCr9sryi2e2vHwZKq43FdFyhSAa7vAqog/Ifl8tzg/8mBZiG2MAKhyjH5oPJp65EA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 </head>
+
 <body ng-app="myApp" ng-controller="booksController">
-    <h3>List of Books</h3>
-    <table style="width:100%;">
+    <h1>List of Books</h1>
+
+    <table style="width: 100%; text-align: center;">
         <tr>
             <th>Id</th>
             <th>Title</th>
-            <th>Release Date</th>
             <th>Author</th>
+            <th>Release Date</th>
             <th>Price</th>
         </tr>
         <tr ng-repeat="book in books">
@@ -23,19 +25,24 @@
             <td>{{book.price | currency}}</td>
         </tr>
     </table>
+
     <button ng-click="loadBooks()">Load Books</button>
+
     <script type="text/javascript">
-        var thisApp = angular.module("myApp", []);
         var booksUrl = "api/books";
+        var thisApp = angular.module("myApp", []);
         var booksController = thisApp.controller("booksController", function ($scope, $http) {
             $scope.books = [];
-            $scope.loadbooks = function () {
+            $scope.loadBooks = function () {
                 $http.get(booksUrl)
-                    .then(function (resonse) {
+                    .then(function (response) {
                         $scope.books = response.data;
                     })
             }
+
         })
+
     </script>
+
 </body>
 </html>

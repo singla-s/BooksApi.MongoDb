@@ -6,7 +6,7 @@ using System.Collections.Generic;
 namespace BooksApi.MongoDb.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
+    [Route("api/[controller]")]
     public class BooksController : Controller
     {
         private readonly IBookRepositoryService _bookRepositoryService;
