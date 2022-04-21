@@ -13,36 +13,43 @@ namespace BooksApi.MongoDb.DataServices
         public MongoDbBookRepositoryService(IConfiguration appConfig)
         {
             var mongoClient = new MongoClient(appConfig.GetConnectionString("BooksDbConSring"));
-        }
+            var database = mongoClient.GetDatabase("booksDb");
 
-        public Book AddBook(Book newBook)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Book DeleteBook(int id)
-        {
-            throw new NotImplementedException();
+            this._books = database.GetCollection<Book>("books");
         }
 
         public List<Book> GetAllBooks()
         {
-            throw new NotImplementedException();
+            return _books.Find<Book>(book => true).ToList();
         }
 
         public Book GetBookById(int id)
         {
-            throw new NotImplementedException();
+            return _books.Find<Book>(book => book.Id == id).FirstOrDefault();
         }
 
-        public List<Book> GetBooksByTitl(string searchStrinng)
+        public List<Book> GetBooksByTitle(string searchStrinng)
         {
-            throw new NotImplementedException();
+            return _books.Find<Book>(book => book.Title.Contains(searchStrinng)).ToList();
         }
 
-        public Book updateBook(int id, Book book)
+        public Book AddBook(Book newBook)
         {
-            throw new NotImplementedException();
+            _books.InsertOne(newBook);
+            return GetBookById(newBook.Id);
+        }
+
+        public Book DeleteBook(int id, Book book)
+        {
+            _books.DeleteOne(book => book.Id == id);
+            return book;
+        }
+
+        public Book updateBook(int id, Book updatedBook)
+        {
+            this._books.ReplaceOne<Book>(book => book.Id == id, updatedBook);
+            var result = _books.Find<Book>(book => book.Id == id).FirstOrDefault();
+            return result;
         }
     }
 }

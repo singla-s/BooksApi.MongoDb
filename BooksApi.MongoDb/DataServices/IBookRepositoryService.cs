@@ -8,10 +8,10 @@ namespace BooksApi.MongoDb.DataServices
         //Return list of books
         //when Serialized into json into an array
         List<Book> GetAllBooks();
-        List<Book> GetBooksByTitl(string searchStrinng);
+        List<Book> GetBooksByTitle(string searchStrinng);
         Book GetBookById(int id);
         Book AddBook(Book newBook);
         Book updateBook(int id, Book book);
-        Book DeleteBook(int id);
+        Book DeleteBook(int id, Book book);
     }
 }

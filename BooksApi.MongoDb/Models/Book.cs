@@ -12,7 +12,7 @@ namespace BooksApi.MongoDb.Models
         public int _Id { get; set; }
 
         [BsonElement("id")]
-        public string Id { get; set; }
+        public int Id { get; set; }
 
         [StringLength(100,MinimumLength = 5)]
         [BsonElement("title")]
