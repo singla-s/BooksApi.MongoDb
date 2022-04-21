@@ -15,7 +15,7 @@ namespace BooksApi.MongoDb.DataServices
             var mongoClient = new MongoClient(appConfig.GetConnectionString("BooksDbConSring"));
             var database = mongoClient.GetDatabase("booksDb");
 
-            this._books = database.GetCollection<Book>("books");
+            this._books = database.GetCollection<Book>("Books");
         }
 
         public List<Book> GetAllBooks()
