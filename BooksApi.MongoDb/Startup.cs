@@ -13,6 +13,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using BooksApi.MongoDb.DataServices;
 using BooksApi.MongoDb.Hubs;
+using BooksApi.MongoDb.Dependencies;
 
 namespace BooksApi.MongoDb
 {
@@ -37,6 +38,7 @@ namespace BooksApi.MongoDb
             services.AddSingleton<IBookRepositoryService, MongoDbBookRepositoryService>();
             services.AddCors();
             services.AddSignalR();
+            services.AddSingleton<MyRabbitMQListener>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -57,6 +59,7 @@ namespace BooksApi.MongoDb
             app.UseCors(x => x.AllowAnyHeader().AllowAnyOrigin().AllowAnyMethod());
 
             app.UseStaticFiles();
+            app.UseRabbitMQListener();
 
             app.UseEndpoints(endpoints =>
             {

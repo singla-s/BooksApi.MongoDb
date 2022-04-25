@@ -13,21 +13,16 @@ namespace BooksApi.MongoDb.Hubs
         public async void subscribeToNewBookRelease(string user, string message)
         {
             callers = Clients;
-            Book newBook = new Book();
-            newBook._Id = "6260e73bc363928f414c7769";
-            newBook.Id = 121;
-            newBook.Title = "Finish";
-            newBook.ReleaseDate = DateTime.Now;
-            newBook.Price = 66.66;
-            newBook.Author = "Jon Acuff";
+            string strBookJson = "{_Id': '6260e73bc363928f414c7765','id': " + "121" + ",'title': 'DotNet Design Pattersn', 'releaseDate': " + DateTime.Now + ",'price': 66.66,'author': 'Tim Tuckey'}";
 
-            await NotifyBookRelease(newBook);
+            //await NotifyBookRelease(strBookJson);
         }
 
         //notifier method
-        public async static Task NotifyBookRelease(Book newBook)
+        //notifier method
+        public async static Task NotifyBookRelease(string strNewBook)
         {
-            await callers.All.SendAsync("NewBookNotification", newBook);
+            await callers.All.SendAsync("NewBookNotification", strNewBook);
         }
     }
 }
