@@ -12,6 +12,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using BooksApi.MongoDb.DataServices;
+using BooksApi.MongoDb.Hubs;
 
 namespace BooksApi.MongoDb
 {
@@ -34,6 +35,8 @@ namespace BooksApi.MongoDb
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "BooksApi.MongoDb", Version = "v1" });
             });
             services.AddSingleton<IBookRepositoryService, MongoDbBookRepositoryService>();
+            services.AddCors();
+            services.AddSignalR();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -51,11 +54,13 @@ namespace BooksApi.MongoDb
             app.UseRouting();
 
             app.UseAuthorization();
+            app.UseCors(x => x.AllowAnyHeader().AllowAnyOrigin().AllowAnyMethod());
 
             app.UseStaticFiles();
 
             app.UseEndpoints(endpoints =>
             {
+                endpoints.MapHub<BooksNotificationHub>("/booksHub");
                 endpoints.MapControllers();
             });
         }
